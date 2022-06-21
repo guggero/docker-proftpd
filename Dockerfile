@@ -6,7 +6,7 @@
 #
 # VERSION	0.9
 
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 MAINTAINER John Moser <john.r.moser@gmail.com>
 
 LABEL version="1.0" description="proftpd server on Ubuntu 16.04"
