@@ -7,7 +7,12 @@ update_proftpd_setting() {
   setting="$2"
   value="$3"
 
-  sed -i -e 's#^[ \t]*'"$setting"'[ \t].*$#'"$setting $value"'#' "$conffile"
+  # Write through a temp file and copy the content back instead of using
+  # sed -i, so this also works when the config file is bind-mounted.
+  tmp="$(mktemp)"
+  sed -e 's#^[ \t]*'"$setting"'[ \t].*$#'"$setting $value"'#' "$conffile" > "$tmp" \
+    && cat "$tmp" > "$conffile"
+  rm -f "$tmp"
 }
 
 [ -n "$PROFTPD_FTP_PORT" ] && \
